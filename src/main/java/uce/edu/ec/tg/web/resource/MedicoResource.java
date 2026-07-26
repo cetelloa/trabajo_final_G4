@@ -18,8 +18,8 @@ public class MedicoResource {
 
     @POST
     @Path("/crearMedico")
-    public void guardarMedico(Medico medico) {
-        this.medicoService.crearMedico(medico);
+    public Medico guardarMedico(Medico medico) {
+        return this.medicoService.crearMedico(medico);
     }
 
     @GET
@@ -38,6 +38,15 @@ public class MedicoResource {
     @Path("/eliminarMedico/{id}")
     public void eliminarMedico(@PathParam("id") Integer id) {
         this.medicoService.eliminarMedicoPorId(id);
+    }
+
+    // Agregar especialidad
+
+    @PUT
+    @Path("/{medicoId}/especialidades/{especialidadId}")
+    public Medico agregarEspecialidad(@PathParam("medicoId") Integer medicoId,
+            @PathParam("especialidadId") Integer especialidadId) {
+        return this.medicoService.agregarEspecialidad(medicoId, especialidadId);
     }
 
 }

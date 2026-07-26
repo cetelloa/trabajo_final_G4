@@ -2,6 +2,8 @@ package uce.edu.ec.tg.domain.model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,11 +34,13 @@ public class CitaMedica extends PanacheEntityBase {
     // Relacion con Paciente
     @ManyToOne
     @JoinColumn(name = "cita_cedula_paciente", referencedColumnName = "paci_cedula")
+    @JsonIgnoreProperties("citasMedicas")
     private Paciente paciente;
 
     // Relacion con Medico
     @ManyToOne
     @JoinColumn(name = "cita_cedula_doctor", referencedColumnName = "medi_cedula")
+    @JsonIgnoreProperties({"citasMedicas", "especialidades", "consultorios"})
     private Medico medico;
 
 }

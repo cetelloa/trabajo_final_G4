@@ -18,8 +18,8 @@ public class PacienteResource {
 
     @POST
     @Path("/crearPaciente")
-    public void guardarPaciente(Paciente paciente) {
-        this.pacienteService.crearPaciente(paciente);
+    public Paciente guardarPaciente(Paciente paciente) {
+        return this.pacienteService.crearPaciente(paciente);
     }
 
     @GET

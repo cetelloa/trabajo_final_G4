@@ -41,6 +41,8 @@ public class EspecialidadService {
         return especialidad;
     }
 
+    // Agregar especialidad a Medico
+
     public Especialidad agregarMedico(Integer especialidadId, Integer medicoId) {
         Especialidad especialidad = this.buscarEspecialidadPorId(especialidadId);
         Medico medico = this.medicoService.obtenerMedicoPorId(medicoId);

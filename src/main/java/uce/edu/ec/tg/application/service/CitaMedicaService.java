@@ -1,6 +1,7 @@
 package uce.edu.ec.tg.application.service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -44,11 +45,11 @@ public class CitaMedicaService {
 
     // Metodos solicitados
 
-    public CitaMedica buscarCitaPorCedulaPaciente(String cedulaPaciente) {
-        return this.citaMedicaRepositoryImpl.buscarCitaPorCedulaPaciente(cedulaPaciente);
+    public List<CitaMedica> buscarCitaPorCedulaPaciente(String cedulaPaciente) {
+        return this.citaMedicaRepositoryImpl.buscarCitasPorCedulaPaciente(cedulaPaciente);
     }
 
-    public CitaMedica buscarCitaPorCedulaMedico(String cedulaMedico) {
+    public List<CitaMedica> buscarCitaPorCedulaMedico(String cedulaMedico) {
         return this.citaMedicaRepositoryImpl.buscarCitaPorCedulaMedico(cedulaMedico);
     }
 

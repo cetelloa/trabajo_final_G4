@@ -3,7 +3,9 @@ package uce.edu.ec.tg.application.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import uce.edu.ec.tg.domain.model.Especialidad;
 import uce.edu.ec.tg.domain.model.Medico;
+import uce.edu.ec.tg.infrastructure.repository.EspecialidadRepositoryImpl;
 import uce.edu.ec.tg.infrastructure.repository.MedicoRepositoryImpl;
 
 @ApplicationScoped
@@ -12,6 +14,9 @@ public class MedicoService {
 
     @Inject
     private MedicoRepositoryImpl medicoRepositoryImpl;
+
+    @Inject
+    private EspecialidadRepositoryImpl especialidadRepositoryImpl;
 
     // CRUD BASICO
 
@@ -38,6 +43,15 @@ public class MedicoService {
             medicoExistente.setCedula(medico.getCedula());
         }
         return medicoExistente;
+    }
+
+    // Agregar especialidad
+
+    public Medico agregarEspecialidad(Integer medicoId, Integer especialidadId) {
+        Medico medico = this.obtenerMedicoPorId(medicoId);
+        Especialidad especialidad = this.especialidadRepositoryImpl.findById(especialidadId);
+        medico.getEspecialidades().add(especialidad);
+        return medico;
     }
 
 }

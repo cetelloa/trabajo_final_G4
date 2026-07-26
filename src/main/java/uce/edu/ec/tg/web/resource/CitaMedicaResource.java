@@ -1,6 +1,7 @@
 package uce.edu.ec.tg.web.resource;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
@@ -12,7 +13,7 @@ import jakarta.ws.rs.PathParam;
 import uce.edu.ec.tg.application.service.CitaMedicaService;
 import uce.edu.ec.tg.domain.model.CitaMedica;
 
-@Path("/medico")
+@Path("/citaMedica ")
 public class CitaMedicaResource {
 
     @Inject
@@ -46,13 +47,13 @@ public class CitaMedicaResource {
 
     @GET
     @Path("/buscarCitaPorCedulaPaciente/{cedulaPaciente}")
-    public CitaMedica buscarCitaPorCedulaPaciente(@PathParam("cedulaPaciente") String cedulaPaciente) {
+    public List<CitaMedica> buscarCitaPorCedulaPaciente(@PathParam("cedulaPaciente") String cedulaPaciente) {
         return this.citaMedicaService.buscarCitaPorCedulaPaciente(cedulaPaciente);
     }
 
     @GET
     @Path("/buscarCitaPorCedulaMedico/{cedulaMedico}")
-    public CitaMedica buscarCitaPorCedulaMedico(@PathParam("cedulaMedico") String cedulaMedico) {
+    public List<CitaMedica> buscarCitaPorCedulaMedico(@PathParam("cedulaMedico") String cedulaMedico) {
         return this.citaMedicaService.buscarCitaPorCedulaMedico(cedulaMedico);
     }
 
