@@ -8,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -24,11 +26,17 @@ public class CitaMedica extends PanacheEntityBase {
     @Id
     @Column(name = "cita_id")
     private Integer id;
-    @Column(name = "cita_cedula_paciente")
-    private String cedulaPaciente;
-    @Column(name = "cita_cedula_doctor")
-    private String cedulaDoctor;
     @Column(name = "cita_fecha_cita")
     private LocalDate fechaCita;
+
+    // Relacion con Paciente
+    @ManyToOne
+    @JoinColumn(name = "cita_cedula_paciente", referencedColumnName = "paci_cedula")
+    private Paciente paciente;
+
+    // Relacion con Medico
+    @ManyToOne
+    @JoinColumn(name = "cita_cedula_doctor", referencedColumnName = "medi_cedula")
+    private Medico medico;
 
 }

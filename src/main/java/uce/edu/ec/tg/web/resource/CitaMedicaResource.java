@@ -1,5 +1,7 @@
 package uce.edu.ec.tg.web.resource;
 
+import java.time.LocalDate;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -38,6 +40,26 @@ public class CitaMedicaResource {
     @Path("/eliminarCita/{id}")
     public void eliminarCita(@PathParam("id") Integer id) {
         this.citaMedicaService.eliminarCitaMedicaPorId(id);
+    }
+
+    // Metodos solicitados
+
+    @GET
+    @Path("/buscarCitaPorCedulaPaciente/{cedulaPaciente}")
+    public CitaMedica buscarCitaPorCedulaPaciente(@PathParam("cedulaPaciente") String cedulaPaciente) {
+        return this.citaMedicaService.buscarCitaPorCedulaPaciente(cedulaPaciente);
+    }
+
+    @GET
+    @Path("/buscarCitaPorCedulaMedico/{cedulaMedico}")
+    public CitaMedica buscarCitaPorCedulaMedico(@PathParam("cedulaMedico") String cedulaMedico) {
+        return this.citaMedicaService.buscarCitaPorCedulaMedico(cedulaMedico);
+    }
+
+    @GET
+    @Path("/buscarCitaPorFecha/{fechaCita}")
+    public CitaMedica buscarCitaPorFecha(@PathParam("fechaCita") LocalDate fechaCita) {
+        return this.citaMedicaService.buscarCitaPorFecha(fechaCita);
     }
 
 }

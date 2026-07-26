@@ -15,26 +15,29 @@ public class MedicoService {
 
     // CRUD BASICO
 
-    public void crearMedico(Medico medico) {
+    public Medico crearMedico(Medico medico) {
         this.medicoRepositoryImpl.persist(medico);
+        return medico;
     }
 
     public Medico obtenerMedicoPorId(Integer id) {
         return this.medicoRepositoryImpl.findById(id);
     }
 
-    public void eliminarMedicoPorId(Integer id) {
-        this.medicoRepositoryImpl.deleteById(id);
+    public Medico eliminarMedicoPorId(Integer id) {
+        Medico medico = this.obtenerMedicoPorId(id);
+        this.medicoRepositoryImpl.delete(medico);
+        return medico;
     }
 
-    public void actualizarMedico(Medico medico, Integer id) {
+    public Medico actualizarMedico(Medico medico, Integer id) {
         Medico medicoExistente = this.obtenerMedicoPorId(id);
         if (medicoExistente != null) {
             medicoExistente.setNombre(medico.getNombre());
             medicoExistente.setApellido(medico.getApellido());
-            medicoExistente.setEspecialidad(medico.getEspecialidad());
             medicoExistente.setCedula(medico.getCedula());
         }
+        return medicoExistente;
     }
 
 }

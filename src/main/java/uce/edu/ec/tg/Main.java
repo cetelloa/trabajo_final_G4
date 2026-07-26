@@ -1,16 +1,24 @@
 package uce.edu.ec.tg;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
+import io.quarkus.runtime.Quarkus;
+import io.quarkus.runtime.QuarkusApplication;
 
-@Path("/hello")
 public class Main {
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello from Quarkus REST";
+    public static void main(String[] args) {
+
+        Quarkus.run(App.class, args);
+        
     }
+
+    public static class App implements QuarkusApplication{
+
+        public int run(String... args) throws Exception {
+
+            System.out.println("Conexion a la base de datos establecida correctamente");
+
+            return 0;
+        }
+    }
+
 }

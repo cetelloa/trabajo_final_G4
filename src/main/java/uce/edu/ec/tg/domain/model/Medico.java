@@ -1,11 +1,16 @@
 package uce.edu.ec.tg.domain.model;
 
+import java.util.List;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -26,9 +31,19 @@ public class Medico extends PanacheEntityBase {
     private String nombre;
     @Column(name = "medi_apellido")
     private String apellido;
-    @Column(name = "medi_especialidad")
-    private String especialidad;
-    @Column(name = "medi_cedula")
+    @Column(name = "medi_cedula", unique = true)
     private String cedula;
+
+    // Relacion con especialidad
+    @ManyToMany(mappedBy = "medicos")
+    private List<Especialidad> especialidades;
+
+    // Relacion con CitaMedica
+    @OneToMany(mappedBy = "medico")
+    private List<CitaMedica> citasMedicas;
+
+    // Relacion con Consultorio
+    @OneToOne(mappedBy = "medico")
+    private Consultorio consultorio;
 
 }

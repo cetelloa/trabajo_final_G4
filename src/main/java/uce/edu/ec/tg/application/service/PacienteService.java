@@ -15,25 +15,29 @@ public class PacienteService {
 
     // CRUD BASICO
 
-    public void crearPaciente(Paciente paciente) {
+    public Paciente crearPaciente(Paciente paciente) {
         this.pacienteRepositoryImpl.persist(paciente);
+        return paciente;
     }
 
     public Paciente obtenerPacientePorId(Integer id) {
         return this.pacienteRepositoryImpl.findById(id);
     }
 
-    public void eliminarPacientePorId(Integer id) {
-        this.pacienteRepositoryImpl.deleteById(id);
+    public Paciente eliminarPacientePorId(Integer id) {
+        Paciente paciente = this.obtenerPacientePorId(id);
+        this.pacienteRepositoryImpl.delete(paciente);
+        return paciente;
     }
 
-    public void actualizarPaciente(Paciente paciente, Integer id) {
+    public Paciente actualizarPaciente(Paciente paciente, Integer id) {
         Paciente pacienteExistente = this.obtenerPacientePorId(id);
         if (pacienteExistente != null) {
             pacienteExistente.setNombre(paciente.getNombre());
             pacienteExistente.setApellido(paciente.getApellido());
             pacienteExistente.setCedula(paciente.getCedula());
         }
+        return pacienteExistente;
     }
 
 }

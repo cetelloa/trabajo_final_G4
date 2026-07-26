@@ -1,5 +1,7 @@
 package uce.edu.ec.tg.application.service;
 
+import java.time.LocalDate;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -13,27 +15,45 @@ public class CitaMedicaService {
     @Inject
     private CitaMedicaRepositoryImpl citaMedicaRepositoryImpl;
 
-    //CRUD BASICO
+    // CRUD BASICO
 
-    public void crearCitaMedica(CitaMedica citaMedica) {
+    public CitaMedica crearCitaMedica(CitaMedica citaMedica) {
         this.citaMedicaRepositoryImpl.persist(citaMedica);
+        return citaMedica;
     }
 
     public CitaMedica obtenerCitaMedicaPorId(Integer id) {
         return this.citaMedicaRepositoryImpl.findById(id);
     }
 
-    public void eliminarCitaMedicaPorId(Integer id) {
-        this.citaMedicaRepositoryImpl.deleteById(id);
+    public CitaMedica eliminarCitaMedicaPorId(Integer id) {
+        CitaMedica citaMedica = this.obtenerCitaMedicaPorId(id);
+        this.citaMedicaRepositoryImpl.delete(citaMedica);
+        return citaMedica;
     }
 
-    public void actualizarCitaMedica(CitaMedica citaMedica, Integer id) {
+    public CitaMedica actualizarCitaMedica(CitaMedica citaMedica, Integer id) {
         CitaMedica citaMedicaExistente = this.obtenerCitaMedicaPorId(id);
         if (citaMedicaExistente != null) {
-            citaMedicaExistente.setCedulaPaciente(citaMedica.getCedulaPaciente());
-            citaMedicaExistente.setCedulaDoctor(citaMedica.getCedulaDoctor());
             citaMedicaExistente.setFechaCita(citaMedica.getFechaCita());
+            citaMedicaExistente.setMedico(citaMedica.getMedico());
+            citaMedicaExistente.setPaciente(citaMedica.getPaciente());
         }
+        return citaMedicaExistente;
+    }
+
+    // Metodos solicitados
+
+    public CitaMedica buscarCitaPorCedulaPaciente(String cedulaPaciente) {
+        return this.citaMedicaRepositoryImpl.buscarCitaPorCedulaPaciente(cedulaPaciente);
+    }
+
+    public CitaMedica buscarCitaPorCedulaMedico(String cedulaMedico) {
+        return this.citaMedicaRepositoryImpl.buscarCitaPorCedulaMedico(cedulaMedico);
+    }
+
+    public CitaMedica buscarCitaPorFecha(LocalDate fechaCita) {
+        return this.citaMedicaRepositoryImpl.buscarCitaPorFecha(fechaCita);
     }
 
 }
