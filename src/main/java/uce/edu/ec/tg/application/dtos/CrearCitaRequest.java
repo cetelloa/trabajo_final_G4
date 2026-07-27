@@ -1,4 +1,4 @@
-package uce.edu.ec.tg.web.resource;
+package uce.edu.ec.tg.application.dtos;
 
 import java.time.LocalDate;
 
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ActualizarCitaRequest {
+public class CrearCitaRequest {
     private String cedulaPaciente;
     private String cedulaMedico;
     private LocalDate fechaCita;

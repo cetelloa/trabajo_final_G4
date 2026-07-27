@@ -10,6 +10,8 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import uce.edu.ec.tg.application.dtos.ActualizarCitaRequest;
+import uce.edu.ec.tg.application.dtos.CrearCitaRequest;
 import uce.edu.ec.tg.application.service.CitaMedicaService;
 import uce.edu.ec.tg.domain.model.CitaMedica;
 
