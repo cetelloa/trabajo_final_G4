@@ -9,4 +9,8 @@ import uce.edu.ec.tg.domain.model.Paciente;
 @Transactional
 public class PacienteRepositoryImpl implements PanacheRepositoryBase<Paciente, Integer> {
 
+    public Paciente buscarPorCedula(String cedula) {
+        return find("cedula", cedula).firstResult();
+    }
+
 }

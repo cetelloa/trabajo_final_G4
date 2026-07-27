@@ -18,26 +18,30 @@ public class PacienteResource {
 
     @POST
     @Path("/crearPaciente")
+    // http://localhost:8080/paciente/crearPaciente
     public Paciente guardarPaciente(Paciente paciente) {
         return this.pacienteService.crearPaciente(paciente);
     }
 
     @GET
     @Path("/obtenerPacientePorId/{id}")
+    // http://localhost:8080/paciente/obtenerPacientePorId/1
     public Paciente obtenerPacientePorId(@PathParam("id") Integer id) {
         return this.pacienteService.obtenerPacientePorId(id);
     }
 
     @PUT
     @Path("/actualizarPaciente/{id}")
-    public void actualizarPaciente(Paciente paciente, @PathParam("id") Integer id) {
-        this.pacienteService.actualizarPaciente(paciente, id);
+    // http://localhost:8080/paciente/actualizarPaciente/1
+    public Paciente actualizarPaciente(Paciente paciente, @PathParam("id") Integer id) {
+        return this.pacienteService.actualizarPaciente(paciente, id);
     }
 
     @DELETE
     @Path("/eliminarPaciente/{id}")
-    public void eliminarPaciente(@PathParam("id") Integer id) {
-        this.pacienteService.eliminarPacientePorId(id);
+    // http://localhost:8080/paciente/eliminarPaciente/1
+    public Paciente eliminarPaciente(@PathParam("id") Integer id) {
+        return this.pacienteService.eliminarPacientePorId(id);
     }
 
 }

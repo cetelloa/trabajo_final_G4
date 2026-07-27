@@ -7,7 +7,11 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import uce.edu.ec.tg.domain.model.CitaMedica;
+import uce.edu.ec.tg.domain.model.Medico;
+import uce.edu.ec.tg.domain.model.Paciente;
 import uce.edu.ec.tg.infrastructure.repository.CitaMedicaRepositoryImpl;
+import uce.edu.ec.tg.infrastructure.repository.MedicoRepositoryImpl;
+import uce.edu.ec.tg.infrastructure.repository.PacienteRepositoryImpl;
 
 @ApplicationScoped
 @Transactional
@@ -16,9 +20,21 @@ public class CitaMedicaService {
     @Inject
     private CitaMedicaRepositoryImpl citaMedicaRepositoryImpl;
 
+    @Inject
+    private PacienteRepositoryImpl pacienteRepositoryImpl;
+
+    @Inject
+    private MedicoRepositoryImpl medicoRepositoryImpl;
+
     // CRUD BASICO
 
-    public CitaMedica crearCitaMedica(CitaMedica citaMedica) {
+    public CitaMedica crearCitaMedica(String cedulaPaciente, String cedulaMedico, LocalDate fechaCita) {
+        Paciente paciente = this.pacienteRepositoryImpl.buscarPorCedula(cedulaPaciente);
+        Medico medico = this.medicoRepositoryImpl.buscarPorCedula(cedulaMedico);
+        CitaMedica citaMedica = new CitaMedica();
+        citaMedica.setFechaCita(fechaCita);
+        citaMedica.setPaciente(paciente);
+        citaMedica.setMedico(medico);
         this.citaMedicaRepositoryImpl.persist(citaMedica);
         return citaMedica;
     }
@@ -33,12 +49,19 @@ public class CitaMedicaService {
         return citaMedica;
     }
 
-    public CitaMedica actualizarCitaMedica(CitaMedica citaMedica, Integer id) {
+    public CitaMedica actualizarCitaMedica(String cedulaPaciente, String cedulaMedico, LocalDate fechaCita, Integer id) {
         CitaMedica citaMedicaExistente = this.obtenerCitaMedicaPorId(id);
         if (citaMedicaExistente != null) {
-            citaMedicaExistente.setFechaCita(citaMedica.getFechaCita());
-            citaMedicaExistente.setMedico(citaMedica.getMedico());
-            citaMedicaExistente.setPaciente(citaMedica.getPaciente());
+            if (fechaCita != null)
+                citaMedicaExistente.setFechaCita(fechaCita);
+            if (cedulaPaciente != null) {
+                Paciente paciente = this.pacienteRepositoryImpl.buscarPorCedula(cedulaPaciente);
+                citaMedicaExistente.setPaciente(paciente);
+            }
+            if (cedulaMedico != null) {
+                Medico medico = this.medicoRepositoryImpl.buscarPorCedula(cedulaMedico);
+                citaMedicaExistente.setMedico(medico);
+            }
         }
         return citaMedicaExistente;
     }

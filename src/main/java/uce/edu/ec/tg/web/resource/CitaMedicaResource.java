@@ -13,7 +13,7 @@ import jakarta.ws.rs.PathParam;
 import uce.edu.ec.tg.application.service.CitaMedicaService;
 import uce.edu.ec.tg.domain.model.CitaMedica;
 
-@Path("/citaMedica ")
+@Path("/citaMedica")
 public class CitaMedicaResource {
 
     @Inject
@@ -21,44 +21,62 @@ public class CitaMedicaResource {
 
     @POST
     @Path("/crearCita")
-    public void guardarCita(CitaMedica cita) {
-        this.citaMedicaService.crearCitaMedica(cita);
+    // http://localhost:8080/citaMedica/crearCita
+    // asi se crea el body {"cedulaPaciente": "1234567890", "cedulaMedico":
+    // "0987654321", "fechaCita": "2024-03-15"}
+    public CitaMedica guardarCita(CrearCitaRequest request) {
+        return this.citaMedicaService.crearCitaMedica(
+                request.getCedulaPaciente(),
+                request.getCedulaMedico(),
+                request.getFechaCita());
     }
 
     @GET
     @Path("/obtenerCitaPorId/{id}")
+    // http://localhost:8080/citaMedica/obtenerCitaPorId/1
     public CitaMedica obtenerCitaPorId(@PathParam("id") Integer id) {
         return this.citaMedicaService.obtenerCitaMedicaPorId(id);
     }
 
     @PUT
     @Path("/actualizarCita/{id}")
-    public void actualizarCita(CitaMedica cita, @PathParam("id") Integer id) {
-        this.citaMedicaService.actualizarCitaMedica(cita, id);
+    // http://localhost:8080/citaMedica/actualizarCita/1
+    // asi va el body {"cedulaPaciente":175152556", "cedulaMedico": "1752625",
+    // "fechaCita": "2024-03-15"}
+    public CitaMedica actualizarCita(ActualizarCitaRequest request, @PathParam("id") Integer id) {
+        return this.citaMedicaService.actualizarCitaMedica(
+                request.getCedulaPaciente(),
+                request.getCedulaMedico(),
+                request.getFechaCita(),
+                id);
     }
 
     @DELETE
     @Path("/eliminarCita/{id}")
-    public void eliminarCita(@PathParam("id") Integer id) {
-        this.citaMedicaService.eliminarCitaMedicaPorId(id);
+    // http://localhost:8080/citaMedica/eliminarCita/1
+    public CitaMedica eliminarCita(@PathParam("id") Integer id) {
+        return this.citaMedicaService.eliminarCitaMedicaPorId(id);
     }
 
     // Metodos solicitados
 
     @GET
     @Path("/buscarCitaPorCedulaPaciente/{cedulaPaciente}")
+    // http://localhost:8080/citaMedica/buscarCitaPorCedulaPaciente/123456789
     public List<CitaMedica> buscarCitaPorCedulaPaciente(@PathParam("cedulaPaciente") String cedulaPaciente) {
         return this.citaMedicaService.buscarCitaPorCedulaPaciente(cedulaPaciente);
     }
 
     @GET
     @Path("/buscarCitaPorCedulaMedico/{cedulaMedico}")
+    // http://localhost:8080/citaMedica/buscarCitaPorCedulaMedico/123456789
     public List<CitaMedica> buscarCitaPorCedulaMedico(@PathParam("cedulaMedico") String cedulaMedico) {
         return this.citaMedicaService.buscarCitaPorCedulaMedico(cedulaMedico);
     }
 
     @GET
     @Path("/buscarCitaPorFecha/{fechaCita}")
+    // http://localhost:8080/citaMedica/buscarCitaPorFecha/2022-01-01
     public CitaMedica buscarCitaPorFecha(@PathParam("fechaCita") LocalDate fechaCita) {
         return this.citaMedicaService.buscarCitaPorFecha(fechaCita);
     }

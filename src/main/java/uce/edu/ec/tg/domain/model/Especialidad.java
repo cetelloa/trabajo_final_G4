@@ -2,7 +2,7 @@ package uce.edu.ec.tg.domain.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
@@ -32,7 +32,7 @@ public class Especialidad extends PanacheEntityBase {
 
     // Relacion con medico
     @ManyToMany(mappedBy = "especialidades")
-    @JsonIgnoreProperties("especialidades")
+    @JsonIgnore
     private List<Medico> medicos;
 
 }

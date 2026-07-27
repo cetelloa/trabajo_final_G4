@@ -17,27 +17,40 @@ public class ConsultorioResource {
     private ConsultorioService consultorioService;
 
     @POST
-    @Path("/crear")
+    @Path("/crearConsultorio")
+    // http://localhost:8080/consultorios/crearConsultorio
     public Consultorio crearConsultorio(Consultorio consultorio) {
         return this.consultorioService.guardarConsultorio(consultorio);
     }
 
     @GET
     @Path("/obtenerConsultorioPorId/{id}")
+    // http://localhost:8080/consultorios/obtenerConsultorioPorId/1
     public Consultorio obtenerConsultorioPorId(@PathParam("id") Integer id) {
         return this.consultorioService.buscarConsultorioPorId(id);
     }
 
     @PUT
     @Path("/actualizarConsultorio/{id}")
-    public void actualizarConsultorio(Consultorio consultorio, @PathParam("id") Integer id) {
-        this.consultorioService.actualizarConsultorio(consultorio, id);
+    // http://localhost:8080/consultorios/actualizarConsultorio/1
+    public Consultorio actualizarConsultorio(Consultorio consultorio, @PathParam("id") Integer id) {
+        return this.consultorioService.actualizarConsultorio(consultorio, id);
     }
 
     @DELETE
     @Path("/eliminarConsultorio/{id}")
-    public void eliminarConsultorio(@PathParam("id") Integer id) {
-        this.consultorioService.eliminarConsultorio(id);
+    // http://localhost:8080/consultorios/eliminarConsultorio/1
+    public Consultorio eliminarConsultorio(@PathParam("id") Integer id) {
+        return this.consultorioService.eliminarConsultorio(id);
+    }
+
+    // Agregar medico al consultorio
+    @PUT
+    @Path("/{consultorioId}/medicos/{medicoId}")
+    // http://localhost:8080/consultorios/{consultorioId}/medicos/{medicoId}
+    public Consultorio agregarMedico(@PathParam("consultorioId") Integer consultorioId,
+            @PathParam("medicoId") Integer medicoId) {
+        return this.consultorioService.agregarMedico(consultorioId, medicoId);
     }
 
 }

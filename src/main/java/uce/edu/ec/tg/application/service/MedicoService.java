@@ -38,9 +38,12 @@ public class MedicoService {
     public Medico actualizarMedico(Medico medico, Integer id) {
         Medico medicoExistente = this.obtenerMedicoPorId(id);
         if (medicoExistente != null) {
-            medicoExistente.setNombre(medico.getNombre());
-            medicoExistente.setApellido(medico.getApellido());
-            medicoExistente.setCedula(medico.getCedula());
+            if (medico.getNombre() != null)
+                medicoExistente.setNombre(medico.getNombre());
+            if (medico.getApellido() != null)
+                medicoExistente.setApellido(medico.getApellido());
+            if (medico.getCedula() != null)
+                medicoExistente.setCedula(medico.getCedula());
         }
         return medicoExistente;
     }

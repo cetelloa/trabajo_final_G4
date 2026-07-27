@@ -18,32 +18,37 @@ public class MedicoResource {
 
     @POST
     @Path("/crearMedico")
+    // http://localhost:8080/medico/crearMedico
     public Medico guardarMedico(Medico medico) {
         return this.medicoService.crearMedico(medico);
     }
 
     @GET
     @Path("/obtenerMedicoPorId/{id}")
+    // http://localhost:8080/medico/obtenerMedicoPorId/1
     public Medico obtenerMedicoPorId(@PathParam("id") Integer id) {
         return this.medicoService.obtenerMedicoPorId(id);
     }
 
     @PUT
     @Path("/actualizarMedico/{id}")
-    public void actualizarMedico(Medico medico, @PathParam("id") Integer id) {
-        this.medicoService.actualizarMedico(medico, id);
+    // http://localhost:8080/medico/actualizarMedico/1
+    public Medico actualizarMedico(Medico medico, @PathParam("id") Integer id) {
+        return this.medicoService.actualizarMedico(medico, id);
     }
 
     @DELETE
     @Path("/eliminarMedico/{id}")
-    public void eliminarMedico(@PathParam("id") Integer id) {
-        this.medicoService.eliminarMedicoPorId(id);
+    // http://localhost:8080/medico/eliminarMedico/1
+    public Medico eliminarMedico(@PathParam("id") Integer id) {
+        return this.medicoService.eliminarMedicoPorId(id);
     }
 
     // Agregar especialidad
 
     @PUT
     @Path("/{medicoId}/especialidades/{especialidadId}")
+    // http://localhost:8080/medico/1/especialidades/1
     public Medico agregarEspecialidad(@PathParam("medicoId") Integer medicoId,
             @PathParam("especialidadId") Integer especialidadId) {
         return this.medicoService.agregarEspecialidad(medicoId, especialidadId);

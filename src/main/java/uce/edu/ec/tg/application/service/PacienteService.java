@@ -33,9 +33,12 @@ public class PacienteService {
     public Paciente actualizarPaciente(Paciente paciente, Integer id) {
         Paciente pacienteExistente = this.obtenerPacientePorId(id);
         if (pacienteExistente != null) {
-            pacienteExistente.setNombre(paciente.getNombre());
-            pacienteExistente.setApellido(paciente.getApellido());
-            pacienteExistente.setCedula(paciente.getCedula());
+            if (paciente.getNombre() != null)
+                pacienteExistente.setNombre(paciente.getNombre());
+            if (paciente.getApellido() != null)
+                pacienteExistente.setApellido(paciente.getApellido());
+            if (paciente.getCedula() != null)
+                pacienteExistente.setCedula(paciente.getCedula());
         }
         return pacienteExistente;
     }
