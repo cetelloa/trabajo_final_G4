@@ -30,7 +30,7 @@ public class Consultorio extends PanacheEntityBase {
     @Column(name = "cons_id")
     private Integer id;
     @Column(name = "cons_nombre_consultorio")
-    private String nombre_consultorio;
+    private String nombreConsultorio;
 
     // Relacion con Medico
     @ManyToMany

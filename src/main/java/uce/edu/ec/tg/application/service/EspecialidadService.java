@@ -3,6 +3,7 @@ package uce.edu.ec.tg.application.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import uce.edu.ec.tg.domain.model.Especialidad;
 import uce.edu.ec.tg.infrastructure.repository.EspecialidadRepositoryImpl;
 
@@ -24,6 +25,11 @@ public class EspecialidadService {
         return this.especialidadRepositoryImpl.findById(id);
     }
 
+    public List<Especialidad> obtenerTodasLasEspecialidades() {
+        return this.especialidadRepositoryImpl.listAll();
+    }
+
+
     public Especialidad actualizarEspecialidad(Especialidad especialidad, Integer id) {
         Especialidad especialidadAntigua = this.buscarEspecialidadPorId(id);
         if (especialidad.getNombre() != null)
@@ -36,5 +42,6 @@ public class EspecialidadService {
         this.especialidadRepositoryImpl.delete(especialidad);
         return especialidad;
     }
+
 
 }

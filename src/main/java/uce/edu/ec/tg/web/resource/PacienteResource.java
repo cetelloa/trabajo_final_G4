@@ -1,5 +1,6 @@
 package uce.edu.ec.tg.web.resource;
 
+import io.quarkus.panache.common.impl.GenerateBridge;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -9,6 +10,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import uce.edu.ec.tg.application.service.PacienteService;
 import uce.edu.ec.tg.domain.model.Paciente;
+import java.util.List;
 
 @Path("/paciente")
 public class PacienteResource {
@@ -28,6 +30,13 @@ public class PacienteResource {
     // http://localhost:8080/paciente/obtenerPacientePorId/1
     public Paciente obtenerPacientePorId(@PathParam("id") Integer id) {
         return this.pacienteService.obtenerPacientePorId(id);
+    }
+
+    @GET
+    @Path("/obtenerTodosLosPacientes")
+    // http://localhost:8080/paciente/obtenerTodosLosPacientes
+    public List<Paciente> obtenerTodosLosPacientes() {
+        return this.pacienteService.obtenerTodosLosPacientes();
     }
 
     @PUT

@@ -7,6 +7,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import java.util.List;
 import uce.edu.ec.tg.application.service.EspecialidadService;
 import uce.edu.ec.tg.domain.model.Especialidad;
 
@@ -29,6 +30,14 @@ public class EspecialidadResource {
     public Especialidad buscarEspecialidadPorId(@PathParam("id") Integer id) {
         return this.especialidadService.buscarEspecialidadPorId(id);
     }
+
+    @GET
+    @Path("/obtenerTodos")
+    // http://localhost:8080/especialidades/obtenerTodos
+    public List<Especialidad> obtenerTodos() {
+        return this.especialidadService.obtenerTodasLasEspecialidades();
+    }
+
 
     @PUT
     @Path("/actualizarEspecialidad/{id}")

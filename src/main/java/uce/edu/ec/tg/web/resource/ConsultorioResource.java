@@ -9,6 +9,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import uce.edu.ec.tg.application.service.ConsultorioService;
 import uce.edu.ec.tg.domain.model.Consultorio;
+import java.util.List;
 
 @Path("/consultorios")
 public class ConsultorioResource {
@@ -28,6 +29,13 @@ public class ConsultorioResource {
     // http://localhost:8080/consultorios/obtenerConsultorioPorId/1
     public Consultorio obtenerConsultorioPorId(@PathParam("id") Integer id) {
         return this.consultorioService.buscarConsultorioPorId(id);
+    }
+
+    @GET
+    @Path("/obtenerTodosLosConsultorios")
+    // http://localhost:8080/consultorios/obtenerTodosLosConsultorios
+    public List<Consultorio> obtenerTodosLosConsultorios() {
+        return this.consultorioService.obtenerTodosLosConsultorios();
     }
 
     @PUT

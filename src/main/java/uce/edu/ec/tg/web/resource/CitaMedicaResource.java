@@ -60,6 +60,13 @@ public class CitaMedicaResource {
         return this.citaMedicaService.eliminarCitaMedicaPorId(id);
     }
 
+    @GET
+    @Path("/obtenerTodasLasCitas")
+    // http://localhost:8080/citaMedica/obtenerTodasLasCitas
+    public List<CitaMedica> obtenerTodasLasCitas() {
+        return this.citaMedicaService.obtenerTodasLasCitas();
+    }
+
     // Metodos solicitados
 
     @GET

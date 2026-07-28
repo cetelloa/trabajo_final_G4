@@ -43,6 +43,10 @@ public class CitaMedicaService {
         return this.citaMedicaRepositoryImpl.findById(id);
     }
 
+    public List<CitaMedica> obtenerTodasLasCitas() {
+        return this.citaMedicaRepositoryImpl.listAll();
+    }
+
     public CitaMedica eliminarCitaMedicaPorId(Integer id) {
         CitaMedica citaMedica = this.obtenerCitaMedicaPorId(id);
         this.citaMedicaRepositoryImpl.delete(citaMedica);

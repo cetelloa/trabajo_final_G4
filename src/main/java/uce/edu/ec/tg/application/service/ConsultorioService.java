@@ -3,6 +3,7 @@ package uce.edu.ec.tg.application.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import uce.edu.ec.tg.domain.model.Consultorio;
 import uce.edu.ec.tg.domain.model.Medico;
 import uce.edu.ec.tg.infrastructure.repository.ConsultorioRepositoryImpl;
@@ -30,8 +31,8 @@ public class ConsultorioService {
 
     public Consultorio actualizarConsultorio(Consultorio consultorio, Integer id) {
         Consultorio consultorioAntiguo = this.buscarConsultorioPorId(id);
-        if (consultorio.getNombre_consultorio() != null)
-            consultorioAntiguo.setNombre_consultorio(consultorio.getNombre_consultorio());
+        if (consultorio.getNombreConsultorio() != null)
+            consultorioAntiguo.setNombreConsultorio(consultorio.getNombreConsultorio());
         return consultorioAntiguo;
     }
 
@@ -41,6 +42,10 @@ public class ConsultorioService {
         return consultorio;
     }
 
+    public List<Consultorio> obtenerTodosLosConsultorios() {
+        return this.consultorioRepositoryImpl.listAll();
+    }
+    
     // Agregar medico al consultorio
 
     public Consultorio agregarMedico(Integer consultorioId, Integer medicoId) {

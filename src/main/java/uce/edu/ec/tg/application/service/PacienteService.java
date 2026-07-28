@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import uce.edu.ec.tg.domain.model.Paciente;
+import java.util.List;
 import uce.edu.ec.tg.infrastructure.repository.PacienteRepositoryImpl;
 
 @ApplicationScoped
@@ -22,6 +23,10 @@ public class PacienteService {
 
     public Paciente obtenerPacientePorId(Integer id) {
         return this.pacienteRepositoryImpl.findById(id);
+    }
+
+    public List<Paciente> obtenerTodosLosPacientes() {
+        return this.pacienteRepositoryImpl.listAll();
     }
 
     public Paciente eliminarPacientePorId(Integer id) {

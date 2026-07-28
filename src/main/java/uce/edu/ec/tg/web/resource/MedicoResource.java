@@ -9,6 +9,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import uce.edu.ec.tg.application.service.MedicoService;
 import uce.edu.ec.tg.domain.model.Medico;
+import java.util.List;
 
 @Path("/medico")
 public class MedicoResource {
@@ -28,6 +29,13 @@ public class MedicoResource {
     // http://localhost:8080/medico/obtenerMedicoPorId/1
     public Medico obtenerMedicoPorId(@PathParam("id") Integer id) {
         return this.medicoService.obtenerMedicoPorId(id);
+    }
+
+    @GET
+    @Path("/obtenerTodosLosMedicos")
+    // http://localhost:8080/medico/obtenerTodosLosMedicos
+    public List<Medico> obtenerTodosLosMedicos() {
+        return this.medicoService.obtenerTodosLosMedicos();
     }
 
     @PUT

@@ -3,6 +3,7 @@ package uce.edu.ec.tg.application.service;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import uce.edu.ec.tg.domain.model.Especialidad;
 import uce.edu.ec.tg.domain.model.Medico;
 import uce.edu.ec.tg.infrastructure.repository.EspecialidadRepositoryImpl;
@@ -27,6 +28,10 @@ public class MedicoService {
 
     public Medico obtenerMedicoPorId(Integer id) {
         return this.medicoRepositoryImpl.findById(id);
+    }
+
+    public List<Medico> obtenerTodosLosMedicos() {
+        return this.medicoRepositoryImpl.listAll();
     }
 
     public Medico eliminarMedicoPorId(Integer id) {
