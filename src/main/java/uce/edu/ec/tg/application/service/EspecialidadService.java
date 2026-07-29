@@ -31,16 +31,23 @@ public class EspecialidadService {
 
     public Especialidad actualizarEspecialidad(Especialidad especialidad, Integer id) {
         Especialidad especialidadAntigua = this.buscarEspecialidadPorId(id);
-        if (especialidadAntigua != null) {
-            if (especialidad.getNombre() != null) {
-                especialidadAntigua.setNombre(especialidad.getNombre());
-            }
+        if (especialidadAntigua == null) {
+            throw new RuntimeException("No existe especialidad con id: " + id);
+        }
+        if (especialidad.getNombre() != null) {
+            especialidadAntigua.setNombre(especialidad.getNombre());
         }
         return especialidadAntigua;
     }
 
     public Especialidad eliminarEspecialidad(Integer id) {
         Especialidad especialidad = this.buscarEspecialidadPorId(id);
+        if (especialidad == null) {
+            throw new RuntimeException("No existe especialidad con id: " + id);
+        }
+        if (!especialidad.getMedicos().isEmpty()) {
+            throw new RuntimeException("La especialidad tiene médicos asociados, no se puede eliminar.");
+        }
         this.especialidadRepositoryImpl.delete(especialidad);
         return especialidad;
     }

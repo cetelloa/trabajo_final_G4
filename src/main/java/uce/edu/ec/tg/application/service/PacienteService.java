@@ -45,12 +45,13 @@ public class PacienteService {
 
     public Paciente actualizarPaciente(Paciente paciente, Integer id) {
         Paciente pacienteExistente = this.obtenerPacientePorId(id);
-        if (pacienteExistente != null) {
-            if (paciente.getNombre() != null)
-                pacienteExistente.setNombre(paciente.getNombre());
-            if (paciente.getApellido() != null)
-                pacienteExistente.setApellido(paciente.getApellido());
+        if (pacienteExistente == null) {
+            throw new RuntimeException("No se encuentra registrado un paciente con id: " + id);
         }
+        if (paciente.getNombre() != null)
+            pacienteExistente.setNombre(paciente.getNombre());
+        if (paciente.getApellido() != null)
+            pacienteExistente.setApellido(paciente.getApellido());
         return pacienteExistente;
     }
 

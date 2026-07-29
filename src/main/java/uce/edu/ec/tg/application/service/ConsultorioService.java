@@ -31,16 +31,20 @@ public class ConsultorioService {
 
     public Consultorio actualizarConsultorio(Consultorio consultorio, Integer id) {
         Consultorio consultorioAntiguo = this.buscarConsultorioPorId(id);
-        if (consultorioAntiguo != null) {
-            if (consultorio.getNombreConsultorio() != null) {
-                consultorioAntiguo.setNombreConsultorio(consultorio.getNombreConsultorio());
-            }
+        if (consultorioAntiguo == null) {
+            throw new RuntimeException("No existe consultorio con id: " + id);
+        }
+        if (consultorio.getNombreConsultorio() != null) {
+            consultorioAntiguo.setNombreConsultorio(consultorio.getNombreConsultorio());
         }
         return consultorioAntiguo;
     }
 
     public Consultorio eliminarConsultorio(Integer id) {
         Consultorio consultorio = this.buscarConsultorioPorId(id);
+        if (consultorio == null) {
+            throw new RuntimeException("No existe consultorio con id: " + id);
+        }
         this.consultorioRepositoryImpl.delete(consultorio);
         return consultorio;
     }
@@ -53,7 +57,13 @@ public class ConsultorioService {
 
     public Consultorio agregarMedico(Integer consultorioId, Integer medicoId) {
         Consultorio consultorio = this.buscarConsultorioPorId(consultorioId);
+        if (consultorio == null) {
+            throw new RuntimeException("No existe consultorio con id: " + consultorioId);
+        }
         Medico medico = this.medicoService.obtenerMedicoPorId(medicoId);
+        if (medico == null) {
+            throw new RuntimeException("No existe médico con id: " + medicoId);
+        }
         if (!consultorio.getMedicos().contains(medico)) {
             consultorio.getMedicos().add(medico);
         }

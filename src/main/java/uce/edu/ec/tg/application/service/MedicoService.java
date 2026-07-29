@@ -51,12 +51,13 @@ public class MedicoService {
 
     public Medico actualizarMedico(Medico medico, Integer id) {
         Medico medicoExistente = this.obtenerMedicoPorId(id);
-        if (medicoExistente != null) {
-            if (medico.getNombre() != null)
-                medicoExistente.setNombre(medico.getNombre());
-            if (medico.getApellido() != null)
-                medicoExistente.setApellido(medico.getApellido());
+        if (medicoExistente == null) {
+            throw new RuntimeException("No se encuentra registrado un medico con id: " + id);
         }
+        if (medico.getNombre() != null)
+            medicoExistente.setNombre(medico.getNombre());
+        if (medico.getApellido() != null)
+            medicoExistente.setApellido(medico.getApellido());
         return medicoExistente;
     }
 
@@ -64,7 +65,13 @@ public class MedicoService {
 
     public Medico agregarEspecialidad(Integer medicoId, Integer especialidadId) {
         Medico medico = this.obtenerMedicoPorId(medicoId);
+        if (medico == null) {
+            throw new RuntimeException("No existe médico con id: " + medicoId);
+        }
         Especialidad especialidad = this.especialidadRepositoryImpl.findById(especialidadId);
+        if (especialidad == null) {
+            throw new RuntimeException("No existe especialidad con id: " + especialidadId);
+        }
         if (!medico.getEspecialidades().contains(especialidad)) {
             medico.getEspecialidades().add(especialidad);
         }
