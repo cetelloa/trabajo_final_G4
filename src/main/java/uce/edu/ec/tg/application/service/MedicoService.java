@@ -36,6 +36,15 @@ public class MedicoService {
 
     public Medico eliminarMedicoPorId(Integer id) {
         Medico medico = this.obtenerMedicoPorId(id);
+        if (medico == null) {
+            throw new RuntimeException("No se encuentra registrado un medico con id: " + id);
+        }
+        if (!medico.getCitasMedicas().isEmpty()) {
+            throw new RuntimeException("El medico tiene citas médicas pendientes, no se puede eliminar.");
+        }
+        if (!medico.getConsultorios().isEmpty()) {
+            throw new RuntimeException("El medico tiene consultorios asignados, no se puede eliminar.");
+        }
         this.medicoRepositoryImpl.delete(medico);
         return medico;
     }
@@ -47,8 +56,6 @@ public class MedicoService {
                 medicoExistente.setNombre(medico.getNombre());
             if (medico.getApellido() != null)
                 medicoExistente.setApellido(medico.getApellido());
-            if (medico.getCedula() != null)
-                medicoExistente.setCedula(medico.getCedula());
         }
         return medicoExistente;
     }
@@ -58,7 +65,9 @@ public class MedicoService {
     public Medico agregarEspecialidad(Integer medicoId, Integer especialidadId) {
         Medico medico = this.obtenerMedicoPorId(medicoId);
         Especialidad especialidad = this.especialidadRepositoryImpl.findById(especialidadId);
-        medico.getEspecialidades().add(especialidad);
+        if (!medico.getEspecialidades().contains(especialidad)) {
+            medico.getEspecialidades().add(especialidad);
+        }
         return medico;
     }
 

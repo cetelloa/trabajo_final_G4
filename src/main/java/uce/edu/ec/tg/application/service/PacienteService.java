@@ -31,6 +31,14 @@ public class PacienteService {
 
     public Paciente eliminarPacientePorId(Integer id) {
         Paciente paciente = this.obtenerPacientePorId(id);
+
+        if (paciente == null) {
+            throw new RuntimeException("No se encuentra registrado un paciente con id: " + id);
+        }
+        if (!paciente.getCitasMedicas().isEmpty()) {
+            throw new RuntimeException("El paciente tiene citas médicas pendientes, no se puede eliminar.");
+        }
+
         this.pacienteRepositoryImpl.delete(paciente);
         return paciente;
     }
@@ -42,8 +50,6 @@ public class PacienteService {
                 pacienteExistente.setNombre(paciente.getNombre());
             if (paciente.getApellido() != null)
                 pacienteExistente.setApellido(paciente.getApellido());
-            if (paciente.getCedula() != null)
-                pacienteExistente.setCedula(paciente.getCedula());
         }
         return pacienteExistente;
     }

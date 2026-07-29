@@ -31,6 +31,13 @@ public class CitaMedicaService {
     public CitaMedica crearCitaMedica(String cedulaPaciente, String cedulaMedico, LocalDate fechaCita) {
         Paciente paciente = this.pacienteRepositoryImpl.buscarPorCedula(cedulaPaciente);
         Medico medico = this.medicoRepositoryImpl.buscarPorCedula(cedulaMedico);
+        if (paciente == null) {
+            throw new RuntimeException("No existe paciente con cédula: " + cedulaPaciente);
+        }
+        if (medico == null) {
+            throw new RuntimeException("No existe médico con cédula: " + cedulaMedico);
+        }
+
         CitaMedica citaMedica = new CitaMedica();
         citaMedica.setFechaCita(fechaCita);
         citaMedica.setPaciente(paciente);
@@ -49,24 +56,40 @@ public class CitaMedicaService {
 
     public CitaMedica eliminarCitaMedicaPorId(Integer id) {
         CitaMedica citaMedica = this.obtenerCitaMedicaPorId(id);
+        if (citaMedica == null) {
+            throw new RuntimeException("No existe cita con id: " + id);
+        }
         this.citaMedicaRepositoryImpl.delete(citaMedica);
         return citaMedica;
     }
 
-    public CitaMedica actualizarCitaMedica(String cedulaPaciente, String cedulaMedico, LocalDate fechaCita, Integer id) {
+    public CitaMedica actualizarCitaMedica(String cedulaPaciente, String cedulaMedico, LocalDate fechaCita,
+            Integer id) {
+
         CitaMedica citaMedicaExistente = this.obtenerCitaMedicaPorId(id);
-        if (citaMedicaExistente != null) {
-            if (fechaCita != null)
-                citaMedicaExistente.setFechaCita(fechaCita);
-            if (cedulaPaciente != null) {
-                Paciente paciente = this.pacienteRepositoryImpl.buscarPorCedula(cedulaPaciente);
-                citaMedicaExistente.setPaciente(paciente);
-            }
-            if (cedulaMedico != null) {
-                Medico medico = this.medicoRepositoryImpl.buscarPorCedula(cedulaMedico);
-                citaMedicaExistente.setMedico(medico);
-            }
+
+        if (citaMedicaExistente == null) {
+            throw new RuntimeException("No existe cita con id: " + id);
         }
+
+        if (fechaCita != null) {
+            citaMedicaExistente.setFechaCita(fechaCita);
+        }
+
+        if (cedulaPaciente != null) {
+            Paciente paciente = this.pacienteRepositoryImpl.buscarPorCedula(cedulaPaciente);
+            if (paciente == null)
+                throw new RuntimeException("No existe paciente con cédula: " + cedulaPaciente);
+            citaMedicaExistente.setPaciente(paciente);
+        }
+
+        if (cedulaMedico != null) {
+            Medico medico = this.medicoRepositoryImpl.buscarPorCedula(cedulaMedico);
+            if (medico == null)
+                throw new RuntimeException("No existe médico con cédula: " + cedulaMedico);
+            citaMedicaExistente.setMedico(medico);
+        }
+
         return citaMedicaExistente;
     }
 

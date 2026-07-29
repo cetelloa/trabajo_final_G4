@@ -29,11 +29,13 @@ public class EspecialidadService {
         return this.especialidadRepositoryImpl.listAll();
     }
 
-
     public Especialidad actualizarEspecialidad(Especialidad especialidad, Integer id) {
         Especialidad especialidadAntigua = this.buscarEspecialidadPorId(id);
-        if (especialidad.getNombre() != null)
-            especialidadAntigua.setNombre(especialidad.getNombre());
+        if (especialidadAntigua != null) {
+            if (especialidad.getNombre() != null) {
+                especialidadAntigua.setNombre(especialidad.getNombre());
+            }
+        }
         return especialidadAntigua;
     }
 
@@ -42,6 +44,5 @@ public class EspecialidadService {
         this.especialidadRepositoryImpl.delete(especialidad);
         return especialidad;
     }
-
 
 }

@@ -31,8 +31,11 @@ public class ConsultorioService {
 
     public Consultorio actualizarConsultorio(Consultorio consultorio, Integer id) {
         Consultorio consultorioAntiguo = this.buscarConsultorioPorId(id);
-        if (consultorio.getNombreConsultorio() != null)
-            consultorioAntiguo.setNombreConsultorio(consultorio.getNombreConsultorio());
+        if (consultorioAntiguo != null) {
+            if (consultorio.getNombreConsultorio() != null) {
+                consultorioAntiguo.setNombreConsultorio(consultorio.getNombreConsultorio());
+            }
+        }
         return consultorioAntiguo;
     }
 
@@ -45,13 +48,15 @@ public class ConsultorioService {
     public List<Consultorio> obtenerTodosLosConsultorios() {
         return this.consultorioRepositoryImpl.listAll();
     }
-    
+
     // Agregar medico al consultorio
 
     public Consultorio agregarMedico(Integer consultorioId, Integer medicoId) {
         Consultorio consultorio = this.buscarConsultorioPorId(consultorioId);
         Medico medico = this.medicoService.obtenerMedicoPorId(medicoId);
-        consultorio.getMedicos().add(medico);
+        if (!consultorio.getMedicos().contains(medico)) {
+            consultorio.getMedicos().add(medico);
+        }
         return consultorio;
     }
 

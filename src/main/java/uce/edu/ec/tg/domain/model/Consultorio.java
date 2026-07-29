@@ -35,7 +35,6 @@ public class Consultorio extends PanacheEntityBase {
     // Relacion con Medico
     @ManyToMany
     @JoinTable(name = "medi_consultorio", joinColumns = @JoinColumn(name = "cons_id"), inverseJoinColumns = @JoinColumn(name = "medi_id"))
-    @JsonIgnore
     private List<Medico> medicos;
 
 }

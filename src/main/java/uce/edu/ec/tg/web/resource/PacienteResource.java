@@ -1,6 +1,5 @@
 package uce.edu.ec.tg.web.resource;
 
-import io.quarkus.panache.common.impl.GenerateBridge;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
