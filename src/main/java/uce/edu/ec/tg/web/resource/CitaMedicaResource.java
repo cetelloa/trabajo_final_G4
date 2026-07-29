@@ -86,7 +86,7 @@ public class CitaMedicaResource {
     @GET
     @Path("/buscarCitaPorFecha/{fechaCita}")
     // http://localhost:8080/citaMedica/buscarCitaPorFecha/2022-01-01
-    public CitaMedica buscarCitaPorFecha(@PathParam("fechaCita") LocalDate fechaCita) {
+    public List<CitaMedica> buscarCitaPorFecha(@PathParam("fechaCita") LocalDate fechaCita) {
         return this.citaMedicaService.buscarCitaPorFecha(fechaCita);
     }
 

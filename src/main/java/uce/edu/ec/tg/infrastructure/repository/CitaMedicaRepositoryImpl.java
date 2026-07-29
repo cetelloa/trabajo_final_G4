@@ -20,8 +20,8 @@ public class CitaMedicaRepositoryImpl implements PanacheRepositoryBase<CitaMedic
         return find("medico.cedula", cedulaMedico).list();
     }
 
-    public CitaMedica buscarCitaPorFecha(LocalDate fechaCita) {
-        return find("fechaCita", fechaCita).firstResult();
+    public List<CitaMedica> buscarCitaPorFecha(LocalDate fechaCita) {
+        return find("fechaCita", fechaCita).list();
     }
 
 }

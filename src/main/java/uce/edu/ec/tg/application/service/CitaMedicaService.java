@@ -103,7 +103,7 @@ public class CitaMedicaService {
         return this.citaMedicaRepositoryImpl.buscarCitaPorCedulaMedico(cedulaMedico);
     }
 
-    public CitaMedica buscarCitaPorFecha(LocalDate fechaCita) {
+    public List<CitaMedica> buscarCitaPorFecha(LocalDate fechaCita) {
         return this.citaMedicaRepositoryImpl.buscarCitaPorFecha(fechaCita);
     }
 

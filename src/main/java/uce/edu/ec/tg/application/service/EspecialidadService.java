@@ -38,6 +38,9 @@ public class EspecialidadService {
         if (especialidadAntigua == null) {
             throw new RuntimeException("No existe especialidad con id: " + id);
         }
+        if (especialidadAntigua.getMedicos() != null && !especialidadAntigua.getMedicos().isEmpty()) {
+            throw new RuntimeException("La especialidad tiene médicos asociados, no se puede actualizar.");
+        }
         if (especialidad.getNombre() != null) {
             especialidadAntigua.setNombre(especialidad.getNombre());
         }

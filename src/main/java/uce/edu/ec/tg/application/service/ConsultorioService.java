@@ -38,6 +38,9 @@ public class ConsultorioService {
         if (consultorioAntiguo == null) {
             throw new RuntimeException("No existe consultorio con id: " + id);
         }
+        if (consultorioAntiguo.getMedicos() != null && !consultorioAntiguo.getMedicos().isEmpty()) {
+            throw new RuntimeException("El consultorio tiene médicos asociados, no se puede actualizar.");
+        }
         if (consultorio.getNombreConsultorio() != null) {
             consultorioAntiguo.setNombreConsultorio(consultorio.getNombreConsultorio());
         }
@@ -49,6 +52,7 @@ public class ConsultorioService {
         if (consultorio == null) {
             throw new RuntimeException("No existe consultorio con id: " + id);
         }
+
         this.consultorioRepositoryImpl.delete(consultorio);
         return consultorio;
     }
