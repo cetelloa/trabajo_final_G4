@@ -9,4 +9,8 @@ import uce.edu.ec.tg.domain.model.Especialidad;
 @Transactional
 public class EspecialidadRepositoryImpl implements PanacheRepositoryBase<Especialidad, Integer> {
 
+    public Especialidad buscarPorNombre(String nombre) {
+        return find("nombre", nombre).firstResult();
+    }
+
 }

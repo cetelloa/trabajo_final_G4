@@ -17,6 +17,10 @@ public class EspecialidadService {
     // CRUD BASICO
 
     public Especialidad guardarEspecialidad(Especialidad especialidad) {
+        Especialidad existente = this.especialidadRepositoryImpl.buscarPorNombre(especialidad.getNombre());
+        if (existente != null) {
+            throw new RuntimeException("Ya existe una especialidad con el nombre: " + especialidad.getNombre());
+        }
         this.especialidadRepositoryImpl.persist(especialidad);
         return especialidad;
     }

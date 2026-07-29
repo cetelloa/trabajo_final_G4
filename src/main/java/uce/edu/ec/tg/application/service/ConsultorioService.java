@@ -21,6 +21,10 @@ public class ConsultorioService {
     // CRUD Basico
 
     public Consultorio guardarConsultorio(Consultorio consultorio) {
+        Consultorio existente = this.consultorioRepositoryImpl.buscarPorNombre(consultorio.getNombreConsultorio());
+        if (existente != null) {
+            throw new RuntimeException("Ya existe un consultorio con el nombre: " + consultorio.getNombreConsultorio());
+        }
         this.consultorioRepositoryImpl.persist(consultorio);
         return consultorio;
     }
