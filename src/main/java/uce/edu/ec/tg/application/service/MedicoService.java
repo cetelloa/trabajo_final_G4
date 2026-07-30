@@ -24,6 +24,10 @@ public class MedicoService {
     // CRUD BASICO
 
     public Medico crearMedico(Medico medico) {
+        Medico existente = this.medicoRepositoryImpl.buscarPorCedula(medico.getCedula());
+        if (existente != null) {
+            throw new RuntimeException("Ya existe un médico registrado con la cédula: " + medico.getCedula());
+        }
         this.medicoRepositoryImpl.persist(medico);
         return medico;
     }

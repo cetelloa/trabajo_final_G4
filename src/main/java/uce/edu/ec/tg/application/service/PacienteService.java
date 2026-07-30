@@ -17,6 +17,10 @@ public class PacienteService {
     // CRUD BASICO
 
     public Paciente crearPaciente(Paciente paciente) {
+        Paciente existente = this.pacienteRepositoryImpl.buscarPorCedula(paciente.getCedula());
+        if (existente != null) {
+            throw new RuntimeException("Ya existe un paciente registrado con la cédula: " + paciente.getCedula());
+        }
         this.pacienteRepositoryImpl.persist(paciente);
         return paciente;
     }
