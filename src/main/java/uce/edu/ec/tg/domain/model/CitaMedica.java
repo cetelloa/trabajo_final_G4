@@ -47,6 +47,7 @@ public class CitaMedica extends PanacheEntityBase {
     @JoinColumn(name = "cita_cedula_doctor", referencedColumnName = "medi_cedula")
     private Medico medico;
 
+    // Relacion con Consultorio
     @ManyToOne
     @JoinColumn(name = "cita_consultorio_id", referencedColumnName = "cons_id")
     private Consultorio consultorio;

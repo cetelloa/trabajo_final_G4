@@ -57,8 +57,6 @@ public class MedicoService {
             medicoExistente.setNombre(medico.getNombre());
         if (medico.getApellido() != null)
             medicoExistente.setApellido(medico.getApellido());
-        if(medico.getCedula() != null)
-            medicoExistente.setCedula(medico.getCedula());
         return medicoExistente;
     }
 
@@ -81,7 +79,5 @@ public class MedicoService {
         }
         return medico;
     }
-
-
 
 }

@@ -38,6 +38,9 @@ public class ConsultorioService {
         if (consultorioAntiguo == null) {
             throw new RuntimeException("No existe consultorio con id: " + id);
         }
+        if (consultorioAntiguo.getCitasMedicas() != null && !consultorioAntiguo.getCitasMedicas().isEmpty()) {
+            throw new RuntimeException("El consultorio tiene citas médicas asociadas, no se puede actualizar.");
+        }
 
         if (consultorio.getNombreConsultorio() != null) {
             consultorioAntiguo.setNombreConsultorio(consultorio.getNombreConsultorio());
@@ -60,7 +63,6 @@ public class ConsultorioService {
             throw new RuntimeException("No existe consultorio con id: " + id);
         }
 
-        // Aqui SI validamos: no se puede borrar si tiene citas asociadas
         if (consultorio.getCitasMedicas() != null && !consultorio.getCitasMedicas().isEmpty()) {
             throw new RuntimeException("El consultorio tiene citas médicas asociadas, no se puede eliminar.");
         }
@@ -68,6 +70,5 @@ public class ConsultorioService {
         this.consultorioRepositoryImpl.delete(consultorio);
         return consultorio;
     }
-
 
 }
