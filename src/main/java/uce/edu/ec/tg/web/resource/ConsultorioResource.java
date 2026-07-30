@@ -52,13 +52,6 @@ public class ConsultorioResource {
         return this.consultorioService.eliminarConsultorio(id);
     }
 
-    // Agregar medico al consultorio
-    @PUT
-    @Path("/{consultorioId}/medicos/{medicoId}")
-    // http://localhost:8080/consultorios/{consultorioId}/medicos/{medicoId}
-    public Consultorio agregarMedico(@PathParam("consultorioId") Integer consultorioId,
-            @PathParam("medicoId") Integer medicoId) {
-        return this.consultorioService.agregarMedico(consultorioId, medicoId);
-    }
+    
 
 }

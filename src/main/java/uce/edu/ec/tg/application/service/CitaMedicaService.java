@@ -1,15 +1,18 @@
 package uce.edu.ec.tg.application.service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import uce.edu.ec.tg.domain.model.CitaMedica;
+import uce.edu.ec.tg.domain.model.Consultorio;
 import uce.edu.ec.tg.domain.model.Medico;
 import uce.edu.ec.tg.domain.model.Paciente;
 import uce.edu.ec.tg.infrastructure.repository.CitaMedicaRepositoryImpl;
+import uce.edu.ec.tg.infrastructure.repository.ConsultorioRepositoryImpl;
 import uce.edu.ec.tg.infrastructure.repository.MedicoRepositoryImpl;
 import uce.edu.ec.tg.infrastructure.repository.PacienteRepositoryImpl;
 
@@ -26,22 +29,36 @@ public class CitaMedicaService {
     @Inject
     private MedicoRepositoryImpl medicoRepositoryImpl;
 
+    @Inject
+    private ConsultorioRepositoryImpl consultorioRepositoryImpl;
+
     // CRUD BASICO
 
-    public CitaMedica crearCitaMedica(String cedulaPaciente, String cedulaMedico, LocalDate fechaCita) {
+    public CitaMedica crearCitaMedica(String cedulaPaciente, String cedulaMedico, String nombreConsultorio,
+            String motivoConsulta, String observaciones, LocalDate fechaCita, LocalTime horaCita) {
+
         Paciente paciente = this.pacienteRepositoryImpl.buscarPorCedula(cedulaPaciente);
         Medico medico = this.medicoRepositoryImpl.buscarPorCedula(cedulaMedico);
+        Consultorio consultorio = this.consultorioRepositoryImpl.buscarPorNombre(nombreConsultorio);
+
         if (paciente == null) {
             throw new RuntimeException("No existe paciente con cédula: " + cedulaPaciente);
         }
         if (medico == null) {
             throw new RuntimeException("No existe médico con cédula: " + cedulaMedico);
         }
+        if (consultorio == null) {
+            throw new RuntimeException("No existe consultorio con nombre: " + nombreConsultorio);
+        }
 
         CitaMedica citaMedica = new CitaMedica();
-        citaMedica.setFechaCita(fechaCita);
         citaMedica.setPaciente(paciente);
         citaMedica.setMedico(medico);
+        citaMedica.setConsultorio(consultorio);
+        citaMedica.setFechaCita(fechaCita);
+        citaMedica.setHoraCita(horaCita);
+        citaMedica.setMotivoConsulta(motivoConsulta);
+        citaMedica.setObservaciones(observaciones);
         this.citaMedicaRepositoryImpl.persist(citaMedica);
         return citaMedica;
     }
@@ -63,8 +80,8 @@ public class CitaMedicaService {
         return citaMedica;
     }
 
-    public CitaMedica actualizarCitaMedica(String cedulaPaciente, String cedulaMedico, LocalDate fechaCita,
-            Integer id) {
+    public CitaMedica actualizarCitaMedica(String cedulaPaciente, String cedulaMedico, String nombreConsultorio,
+            String motivoConsulta, String observaciones, LocalDate fechaCita, LocalTime horaCita, Integer id) {
 
         CitaMedica citaMedicaExistente = this.obtenerCitaMedicaPorId(id);
 
@@ -74,6 +91,10 @@ public class CitaMedicaService {
 
         if (fechaCita != null) {
             citaMedicaExistente.setFechaCita(fechaCita);
+        }
+
+        if (horaCita != null) {
+            citaMedicaExistente.setHoraCita(horaCita);
         }
 
         if (cedulaPaciente != null) {
@@ -90,6 +111,19 @@ public class CitaMedicaService {
             citaMedicaExistente.setMedico(medico);
         }
 
+        if (nombreConsultorio != null) {
+            Consultorio consultorio = this.consultorioRepositoryImpl.buscarPorNombre(nombreConsultorio);
+            if (consultorio == null)
+                throw new RuntimeException("No existe consultorio con nombre: " + nombreConsultorio);
+            citaMedicaExistente.setConsultorio(consultorio);
+        }
+
+        if (motivoConsulta != null) {
+            citaMedicaExistente.setMotivoConsulta(motivoConsulta);
+        }
+        if (observaciones != null) {
+            citaMedicaExistente.setObservaciones(observaciones);
+        }
         return citaMedicaExistente;
     }
 

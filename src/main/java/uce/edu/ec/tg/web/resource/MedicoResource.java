@@ -1,5 +1,7 @@
 package uce.edu.ec.tg.web.resource;
 
+import java.util.List;
+
 import jakarta.inject.Inject;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -9,7 +11,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import uce.edu.ec.tg.application.service.MedicoService;
 import uce.edu.ec.tg.domain.model.Medico;
-import java.util.List;
 
 @Path("/medico")
 public class MedicoResource {
@@ -52,7 +53,7 @@ public class MedicoResource {
         return this.medicoService.eliminarMedicoPorId(id);
     }
 
-    // Agregar especialidad
+    // Especialidades
 
     @PUT
     @Path("/{medicoId}/especialidades/{especialidadId}")
@@ -62,4 +63,5 @@ public class MedicoResource {
         return this.medicoService.agregarEspecialidad(medicoId, especialidadId);
     }
 
+    
 }

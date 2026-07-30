@@ -1,9 +1,11 @@
 package uce.edu.ec.tg.application.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import uce.edu.ec.tg.domain.model.Especialidad;
 import uce.edu.ec.tg.domain.model.Medico;
 import uce.edu.ec.tg.infrastructure.repository.EspecialidadRepositoryImpl;
@@ -39,11 +41,8 @@ public class MedicoService {
         if (medico == null) {
             throw new RuntimeException("No se encuentra registrado un medico con id: " + id);
         }
-        if (!medico.getCitasMedicas().isEmpty()) {
-            throw new RuntimeException("El medico tiene citas médicas pendientes, no se puede eliminar.");
-        }
-        if (!medico.getConsultorios().isEmpty()) {
-            throw new RuntimeException("El medico tiene consultorios asignados, no se puede eliminar.");
+        if (medico.getCitasMedicas() != null && !medico.getCitasMedicas().isEmpty()) {
+            throw new RuntimeException("El medico tiene citas médicas asociadas, no se puede eliminar.");
         }
         this.medicoRepositoryImpl.delete(medico);
         return medico;
@@ -58,10 +57,12 @@ public class MedicoService {
             medicoExistente.setNombre(medico.getNombre());
         if (medico.getApellido() != null)
             medicoExistente.setApellido(medico.getApellido());
+        if(medico.getCedula() != null)
+            medicoExistente.setCedula(medico.getCedula());
         return medicoExistente;
     }
 
-    // Agregar especialidad
+    // Especialidades
 
     public Medico agregarEspecialidad(Integer medicoId, Integer especialidadId) {
         Medico medico = this.obtenerMedicoPorId(medicoId);
@@ -72,10 +73,15 @@ public class MedicoService {
         if (especialidad == null) {
             throw new RuntimeException("No existe especialidad con id: " + especialidadId);
         }
+        if (medico.getEspecialidades() == null) {
+            medico.setEspecialidades(new ArrayList<>());
+        }
         if (!medico.getEspecialidades().contains(especialidad)) {
             medico.getEspecialidades().add(especialidad);
         }
         return medico;
     }
+
+
 
 }

@@ -35,8 +35,8 @@ public class PacienteService {
         if (paciente == null) {
             throw new RuntimeException("No se encuentra registrado un paciente con id: " + id);
         }
-        if (!paciente.getCitasMedicas().isEmpty()) {
-            throw new RuntimeException("El paciente tiene citas médicas pendientes, no se puede eliminar.");
+        if (paciente.getCitasMedicas() != null && !paciente.getCitasMedicas().isEmpty()) {
+            throw new RuntimeException("El paciente tiene citas médicas asociadas, no se puede eliminar.");
         }
 
         this.pacienteRepositoryImpl.delete(paciente);

@@ -5,7 +5,6 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import uce.edu.ec.tg.domain.model.Consultorio;
-import uce.edu.ec.tg.domain.model.Medico;
 import uce.edu.ec.tg.infrastructure.repository.ConsultorioRepositoryImpl;
 
 @ApplicationScoped
@@ -14,9 +13,6 @@ public class ConsultorioService {
 
     @Inject
     private ConsultorioRepositoryImpl consultorioRepositoryImpl;
-
-    @Inject
-    private MedicoService medicoService;
 
     // CRUD Basico
 
@@ -33,16 +29,27 @@ public class ConsultorioService {
         return this.consultorioRepositoryImpl.findById(id);
     }
 
+    public List<Consultorio> obtenerTodosLosConsultorios() {
+        return this.consultorioRepositoryImpl.listAll();
+    }
+
     public Consultorio actualizarConsultorio(Consultorio consultorio, Integer id) {
         Consultorio consultorioAntiguo = this.buscarConsultorioPorId(id);
         if (consultorioAntiguo == null) {
             throw new RuntimeException("No existe consultorio con id: " + id);
         }
-        if (consultorioAntiguo.getMedicos() != null && !consultorioAntiguo.getMedicos().isEmpty()) {
-            throw new RuntimeException("El consultorio tiene médicos asociados, no se puede actualizar.");
-        }
+
         if (consultorio.getNombreConsultorio() != null) {
             consultorioAntiguo.setNombreConsultorio(consultorio.getNombreConsultorio());
+        }
+        if (consultorio.getDireccion() != null) {
+            consultorioAntiguo.setDireccion(consultorio.getDireccion());
+        }
+        if (consultorio.getPiso() != null) {
+            consultorioAntiguo.setPiso(consultorio.getPiso());
+        }
+        if (consultorio.getTelefono() != null) {
+            consultorioAntiguo.setTelefono(consultorio.getTelefono());
         }
         return consultorioAntiguo;
     }
@@ -53,29 +60,14 @@ public class ConsultorioService {
             throw new RuntimeException("No existe consultorio con id: " + id);
         }
 
+        // Aqui SI validamos: no se puede borrar si tiene citas asociadas
+        if (consultorio.getCitasMedicas() != null && !consultorio.getCitasMedicas().isEmpty()) {
+            throw new RuntimeException("El consultorio tiene citas médicas asociadas, no se puede eliminar.");
+        }
+
         this.consultorioRepositoryImpl.delete(consultorio);
         return consultorio;
     }
 
-    public List<Consultorio> obtenerTodosLosConsultorios() {
-        return this.consultorioRepositoryImpl.listAll();
-    }
-
-    // Agregar medico al consultorio
-
-    public Consultorio agregarMedico(Integer consultorioId, Integer medicoId) {
-        Consultorio consultorio = this.buscarConsultorioPorId(consultorioId);
-        if (consultorio == null) {
-            throw new RuntimeException("No existe consultorio con id: " + consultorioId);
-        }
-        Medico medico = this.medicoService.obtenerMedicoPorId(medicoId);
-        if (medico == null) {
-            throw new RuntimeException("No existe médico con id: " + medicoId);
-        }
-        if (!consultorio.getMedicos().contains(medico)) {
-            consultorio.getMedicos().add(medico);
-        }
-        return consultorio;
-    }
 
 }

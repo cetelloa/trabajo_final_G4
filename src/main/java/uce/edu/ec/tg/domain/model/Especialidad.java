@@ -27,8 +27,12 @@ public class Especialidad extends PanacheEntityBase {
     @Id
     @Column(name = "espe_id")
     private Integer id;
+
     @Column(name = "espe_nombre", unique = true)
     private String nombre;
+
+    @Column(name = "espe_descripcion")
+    private String descripcion;
 
     // Relacion con medico
     @ManyToMany(mappedBy = "especialidades")

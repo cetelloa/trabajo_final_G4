@@ -1,9 +1,10 @@
 package uce.edu.ec.tg.application.service;
 
+import java.util.List;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import uce.edu.ec.tg.domain.model.Especialidad;
 import uce.edu.ec.tg.infrastructure.repository.EspecialidadRepositoryImpl;
 
@@ -16,7 +17,7 @@ public class EspecialidadService {
 
     // CRUD BASICO
 
-    public Especialidad guardarEspecialidad(Especialidad especialidad) {
+    public Especialidad crearEspecialidad(Especialidad especialidad) {
         Especialidad existente = this.especialidadRepositoryImpl.buscarPorNombre(especialidad.getNombre());
         if (existente != null) {
             throw new RuntimeException("Ya existe una especialidad con el nombre: " + especialidad.getNombre());
@@ -25,7 +26,7 @@ public class EspecialidadService {
         return especialidad;
     }
 
-    public Especialidad buscarEspecialidadPorId(Integer id) {
+    public Especialidad obtenerEspecialidadPorId(Integer id) {
         return this.especialidadRepositoryImpl.findById(id);
     }
 
@@ -34,26 +35,26 @@ public class EspecialidadService {
     }
 
     public Especialidad actualizarEspecialidad(Especialidad especialidad, Integer id) {
-        Especialidad especialidadAntigua = this.buscarEspecialidadPorId(id);
-        if (especialidadAntigua == null) {
+        Especialidad especialidadExistente = this.obtenerEspecialidadPorId(id);
+        if (especialidadExistente == null) {
             throw new RuntimeException("No existe especialidad con id: " + id);
         }
-        if (especialidadAntigua.getMedicos() != null && !especialidadAntigua.getMedicos().isEmpty()) {
-            throw new RuntimeException("La especialidad tiene médicos asociados, no se puede actualizar.");
-        }
         if (especialidad.getNombre() != null) {
-            especialidadAntigua.setNombre(especialidad.getNombre());
+            especialidadExistente.setNombre(especialidad.getNombre());
         }
-        return especialidadAntigua;
+        if (especialidad.getDescripcion() != null) {
+            especialidadExistente.setDescripcion(especialidad.getDescripcion());
+        }
+        return especialidadExistente;
     }
 
-    public Especialidad eliminarEspecialidad(Integer id) {
-        Especialidad especialidad = this.buscarEspecialidadPorId(id);
+    public Especialidad eliminarEspecialidadPorId(Integer id) {
+        Especialidad especialidad = this.obtenerEspecialidadPorId(id);
         if (especialidad == null) {
             throw new RuntimeException("No existe especialidad con id: " + id);
         }
-        if (!especialidad.getMedicos().isEmpty()) {
-            throw new RuntimeException("La especialidad tiene médicos asociados, no se puede eliminar.");
+        if (especialidad.getMedicos() != null && !especialidad.getMedicos().isEmpty()) {
+            throw new RuntimeException("La especialidad tiene médicos asignados, no se puede eliminar.");
         }
         this.especialidadRepositoryImpl.delete(especialidad);
         return especialidad;

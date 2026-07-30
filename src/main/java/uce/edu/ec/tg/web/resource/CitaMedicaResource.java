@@ -24,13 +24,17 @@ public class CitaMedicaResource {
     @POST
     @Path("/crearCita")
     // http://localhost:8080/citaMedica/crearCita
-    // asi se crea el body {"cedulaPaciente": "1234567890", "cedulaMedico":
-    // "0987654321", "fechaCita": "2024-03-15"}
+    // asi se crea el body {"cedulaPaciente": "1234567890", "cedulaMedico": "0987654321",
+    // "nombreConsultorio": "Consultorio 3", "fechaCita": "2024-03-15", "horaCita": "09:30"}
     public CitaMedica guardarCita(CrearCitaRequest request) {
         return this.citaMedicaService.crearCitaMedica(
                 request.getCedulaPaciente(),
                 request.getCedulaMedico(),
-                request.getFechaCita());
+                request.getNombreConsultorio(),
+                request.getMotivoConsulta(),
+                request.getObservaciones(),
+                request.getFechaCita(),
+                request.getHoraCita());
     }
 
     @GET
@@ -43,13 +47,17 @@ public class CitaMedicaResource {
     @PUT
     @Path("/actualizarCita/{id}")
     // http://localhost:8080/citaMedica/actualizarCita/1
-    // asi va el body {"cedulaPaciente":175152556", "cedulaMedico": "1752625",
-    // "fechaCita": "2024-03-15"}
+    // asi va el body {"cedulaPaciente": "175152556", "cedulaMedico": "1752625",
+    // "nombreConsultorio": "Consultorio 3", "fechaCita": "2024-03-15", "horaCita": "09:30"}
     public CitaMedica actualizarCita(ActualizarCitaRequest request, @PathParam("id") Integer id) {
         return this.citaMedicaService.actualizarCitaMedica(
                 request.getCedulaPaciente(),
                 request.getCedulaMedico(),
+                request.getNombreConsultorio(),
+                request.getMotivoConsulta(),
+                request.getObservaciones(),
                 request.getFechaCita(),
+                request.getHoraCita(),
                 id);
     }
 

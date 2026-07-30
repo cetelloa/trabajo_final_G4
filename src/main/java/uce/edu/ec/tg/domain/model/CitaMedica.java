@@ -1,6 +1,7 @@
 package uce.edu.ec.tg.domain.model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
@@ -29,6 +30,13 @@ public class CitaMedica extends PanacheEntityBase {
     @Column(name = "cita_fecha_cita")
     private LocalDate fechaCita;
 
+    @Column(name = "cita_hora_cita")
+    private LocalTime horaCita;
+    @Column(name = "cita_motivo")
+    private String motivoConsulta;
+    @Column(name = "cita_observaciones")
+    private String observaciones;
+
     // Relacion con Paciente
     @ManyToOne
     @JoinColumn(name = "cita_cedula_paciente", referencedColumnName = "paci_cedula")
@@ -38,5 +46,9 @@ public class CitaMedica extends PanacheEntityBase {
     @ManyToOne
     @JoinColumn(name = "cita_cedula_doctor", referencedColumnName = "medi_cedula")
     private Medico medico;
+
+    @ManyToOne
+    @JoinColumn(name = "cita_consultorio_id", referencedColumnName = "cons_id")
+    private Consultorio consultorio;
 
 }

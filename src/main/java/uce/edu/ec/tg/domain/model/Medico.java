@@ -48,9 +48,5 @@ public class Medico extends PanacheEntityBase {
     @JsonIgnore
     private List<CitaMedica> citasMedicas;
 
-    // Relacion con Consultorio
-    @ManyToMany(mappedBy = "medicos")
-    @JsonIgnore
-    private List<Consultorio> consultorios;
 
 }

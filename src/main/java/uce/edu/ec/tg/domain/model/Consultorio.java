@@ -10,9 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -32,10 +30,18 @@ public class Consultorio extends PanacheEntityBase {
     @Column(name = "cons_nombre_consultorio", unique = true)
     private String nombreConsultorio;
 
-    // Relacion con Medico
-    @ManyToMany
-    @JoinTable(name = "medi_consultorio", joinColumns = @JoinColumn(name = "cons_id"), inverseJoinColumns = @JoinColumn(name = "medi_id"))
+    @Column(name = "cons_direccion")
+    private String direccion;
+
+    @Column(name = "cons_piso")
+    private String piso;
+
+    @Column(name = "cons_telefono")
+    private String telefono;
+
+    // Relacion con CitaMedica
+    @OneToMany(mappedBy = "consultorio")
     @JsonIgnore
-    private List<Medico> medicos;
+    private List<CitaMedica> citasMedicas;
 
 }
