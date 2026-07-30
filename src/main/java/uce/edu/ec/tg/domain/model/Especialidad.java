@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -35,4 +36,8 @@ public class Especialidad extends PanacheEntityBase {
     @JsonIgnore
     private List<Medico> medicos;
 
+     // Relacion con CitaMedica
+    @OneToMany(mappedBy = "especialidad")
+    @JsonIgnore
+    private List<CitaMedica> citasMedicas;
 }

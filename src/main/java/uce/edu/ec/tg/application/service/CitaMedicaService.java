@@ -7,6 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import uce.edu.ec.tg.domain.model.CitaMedica;
+import uce.edu.ec.tg.domain.model.Especialidad;
 import uce.edu.ec.tg.domain.model.Medico;
 import uce.edu.ec.tg.domain.model.Paciente;
 import uce.edu.ec.tg.infrastructure.repository.CitaMedicaRepositoryImpl;
@@ -26,15 +27,20 @@ public class CitaMedicaService {
     @Inject
     private MedicoRepositoryImpl medicoRepositoryImpl;
 
+    @Inject
+    private EspecialidadService especialidadService;
+
     // CRUD BASICO
 
     public CitaMedica crearCitaMedica(String cedulaPaciente, String cedulaMedico, LocalDate fechaCita) {
         Paciente paciente = this.pacienteRepositoryImpl.buscarPorCedula(cedulaPaciente);
         Medico medico = this.medicoRepositoryImpl.buscarPorCedula(cedulaMedico);
+        Especialidad especialidad = this.especialidadService.buscarEspecialidadPorId(medico.getEspecialidades().get(0).getId());
         CitaMedica citaMedica = new CitaMedica();
         citaMedica.setFechaCita(fechaCita);
         citaMedica.setPaciente(paciente);
         citaMedica.setMedico(medico);
+        citaMedica.setEspecialidad(especialidad);
         this.citaMedicaRepositoryImpl.persist(citaMedica);
         return citaMedica;
     }
